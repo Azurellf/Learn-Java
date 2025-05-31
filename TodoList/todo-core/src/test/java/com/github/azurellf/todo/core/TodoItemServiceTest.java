@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,12 +38,34 @@ class TodoItemServiceTest {
 
     @Test
     public void should_mark_todo_item_done() {
-        when(repository.findAll()).thenReturn(ImmutableList.of(new TodoItem("foo")));
-        when(repository.save(any())).then(returnsFirstArg());
+        TodoItem item = new TodoItem("foo");
+        when(repository.findAll()).thenReturn(ImmutableList.of(item));
 
-        Optional<TodoItem> todoItem = service.markTodoItemDone(TodoIndexParameter.of(0));
+        Optional<TodoItem> todoItem = service.markTodoItemDone(TodoIndexParameter.of(item.getIndex()));
 
         assertThat(todoItem).isPresent();
         assertThat(todoItem.get().isDone()).isTrue();
+    }
+
+    @Test
+    public void should_return_undo_items() {
+        var item1 = new TodoItem("undo");
+        var item2 = new TodoItem("done");
+        item2.markDone();
+
+        when(repository.findAll()).thenReturn(ImmutableList.of(item1, item2));
+        List<TodoItem> items = service.list(false);
+        assertThat(items).containsOnly(item1);
+    }
+
+    @Test
+    public void should_return_all_items() {
+        var item1 = new TodoItem("undo");
+        var item2 = new TodoItem("done");
+        item2.markDone();
+
+        when(repository.findAll()).thenReturn(ImmutableList.of(item1, item2));
+        List<TodoItem> items = service.list(true);
+        assertThat(items).contains(item1,item2);
     }
 }

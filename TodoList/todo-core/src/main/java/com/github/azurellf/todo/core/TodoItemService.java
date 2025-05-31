@@ -1,5 +1,6 @@
 package com.github.azurellf.todo.core;
 
+import java.util.List;
 import java.util.Optional;
 
 public class TodoItemService {
@@ -18,8 +19,18 @@ public class TodoItemService {
     }
 
     public Optional<TodoItem> markTodoItemDone(final TodoIndexParameter index) {
-        final Optional<TodoItem> optionalItem = Optional.ofNullable(repository.findAll().get(index.getIndex()));
-        optionalItem.get().markDone();
+        final Optional<TodoItem> optionalItem = repository.findAll()
+                .stream()
+                .filter(item -> item.getIndex() == index.getIndex())
+                .findFirst();
+        optionalItem.ifPresent(TodoItem::markDone);
         return optionalItem;
+    }
+
+    public List<TodoItem> list(boolean showAll) {
+        return repository.findAll()
+                .stream()
+                .filter(item -> showAll || !item.isDone())
+                .toList();
     }
 }
