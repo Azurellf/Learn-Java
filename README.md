@@ -1,3 +1,4 @@
 # Learn-Java
-## Mybatis-new
-- Use mybatis without springboot
+## Mybatis
+- mybatis-new: Use mybatis without springboot
+- logback-new: Use logback without springboot
