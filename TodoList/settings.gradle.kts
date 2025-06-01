@@ -1,3 +1,3 @@
 rootProject.name = "TodoList"
 
-include("todo-core")
+include("todo-core","todo-cli")
