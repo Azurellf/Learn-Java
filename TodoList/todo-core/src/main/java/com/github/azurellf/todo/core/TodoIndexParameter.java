@@ -5,14 +5,14 @@ import lombok.Getter;
 public class TodoIndexParameter {
 
     @Getter
-    private final long index;
+    private final int index;
 
-    private TodoIndexParameter(final long index) {
+    private TodoIndexParameter(final int index) {
         this.index = index;
     }
 
-    public static TodoIndexParameter of(final long index) {
-        if(index < 0) {
+    public static TodoIndexParameter of(final int index) {
+        if(index <= 0) {
             throw new IllegalArgumentException("Todo index should be greater than 0");
         }
         return new TodoIndexParameter(index);

@@ -1,7 +1,11 @@
 package com.github.azurellf.todo.core;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Streams;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class TodoItemService {
     private final TodoItemRepository repository;
@@ -19,18 +23,19 @@ public class TodoItemService {
     }
 
     public Optional<TodoItem> markTodoItemDone(final TodoIndexParameter index) {
-        final Optional<TodoItem> optionalItem = repository.findAll()
-                .stream()
-                .filter(item -> item.getIndex() == index.getIndex())
-                .findFirst();
-        optionalItem.ifPresent(TodoItem::markDone);
-        return optionalItem;
+        final Iterable<TodoItem> all = repository.findAll();
+        try {
+            final TodoItem todoItem = Iterables.get(all, index.getIndex() - 1);
+            todoItem.markDone();
+            return Optional.of(repository.save(todoItem));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 
-    public List<TodoItem> list(boolean showAll) {
-        return repository.findAll()
-                .stream()
-                .filter(item -> showAll || !item.isDone())
-                .toList();
+    public List<TodoItem> list(boolean all) {
+        return Streams.stream(this.repository.findAll())
+                .filter(item -> all || !item.isDone())
+                .collect(Collectors.toList());
     }
 }

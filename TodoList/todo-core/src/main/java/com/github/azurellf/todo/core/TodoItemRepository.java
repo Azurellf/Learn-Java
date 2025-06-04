@@ -6,5 +6,5 @@ import java.util.Optional;
 public interface TodoItemRepository {
     TodoItem save(TodoItem item);
 
-    List<TodoItem> findAll();
+    Iterable<TodoItem> findAll();
 }

@@ -16,9 +16,6 @@ dependencies {
     compileOnly(libs.findLibrary("lombok").get())
     annotationProcessor(libs.findLibrary("lombok").get())
 
-    testCompileOnly(libs.findLibrary("lombok").get())
-    testAnnotationProcessor(libs.findLibrary("lombok").get())
-
     testImplementation(platform(libs.findLibrary("junit").get()))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation(libs.findLibrary("mockito").get())

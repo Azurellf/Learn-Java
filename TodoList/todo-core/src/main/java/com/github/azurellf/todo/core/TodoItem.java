@@ -7,10 +7,10 @@ import java.time.Instant;
 public class TodoItem {
 
     @Getter
-    private final String content;
+    private long index;
 
     @Getter
-    private final long index;
+    private final String content;
 
     @Getter
     private boolean done;
@@ -18,7 +18,10 @@ public class TodoItem {
     public TodoItem(final String content) {
         this.content = content;
         this.done = false;
-        this.index = Instant.now().toEpochMilli();
+    }
+
+    public void assignIndex(final long index) {
+        this.index = index;
     }
 
     public void markDone() {
