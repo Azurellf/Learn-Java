@@ -1,6 +1,11 @@
 plugins {
     java
     checkstyle
+    jacoco
+}
+
+jacoco {
+    reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
 }
 
 group = "org.example"
@@ -25,4 +30,22 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = "1".toBigDecimal()
+            }
+        }
+    }
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
+    }
 }
