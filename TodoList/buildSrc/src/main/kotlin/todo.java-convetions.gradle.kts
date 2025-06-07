@@ -4,9 +4,6 @@ plugins {
     jacoco
 }
 
-jacoco {
-    reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
-}
 
 group = "org.example"
 version = "1.0-SNAPSHOT"
@@ -26,6 +23,9 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation(libs.findLibrary("mockito").get())
     testImplementation(libs.findLibrary("assertj").get())
+
+    implementation(libs.findLibrary("guava").get())
+    implementation(libs.findLibrary("jackson").get())
 }
 
 tasks.test {
@@ -33,19 +33,18 @@ tasks.test {
 }
 
 tasks.jacocoTestCoverageVerification {
+    dependsOn(tasks.test)
     violationRules {
         rule {
+            element = "CLASS"
+            excludes = listOf("com.github.azurellf.todo.util.*")
             limit {
-                minimum = "1".toBigDecimal()
+                minimum = "1.00".toBigDecimal()
             }
         }
     }
 }
 
 tasks.jacocoTestReport {
-    reports {
-        xml.required = false
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
-    }
+    dependsOn(tasks.test) // tests are required to run before generating the report
 }

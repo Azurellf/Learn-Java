@@ -1,18 +1,19 @@
 package com.github.azurellf.todo.core;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.time.Instant;
-
+@EqualsAndHashCode
+@Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class TodoItem {
 
-    @Getter
     private long index;
-
-    @Getter
-    private final String content;
-
-    @Getter
+    private  String content;
     private boolean done;
 
     public TodoItem(final String content) {

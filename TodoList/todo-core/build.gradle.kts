@@ -4,6 +4,4 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.guava)
 }
-
