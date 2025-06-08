@@ -5,6 +5,7 @@ lombok = "1.18.38"
 mockito = "5.18.0"
 assertj = "3.27.3"
 jackson = "2.19.0"
+picocli = "4.7.7"
 
 [libraries]
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
@@ -13,3 +14,4 @@ lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" 
 mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 assertj = { group = "org.assertj", name = "assertj-core", version.ref = "assertj" }
 jackson = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson"}
+picocli = { group = "info.picocli", name = "picocli", version.ref = "picocli"}
